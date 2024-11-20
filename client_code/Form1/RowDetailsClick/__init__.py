@@ -18,5 +18,11 @@ class RowDetailsClick(RowDetailsClickTemplate):
     # get Form1
     parent = self.parent.parent.parent.parent
     zellennummer = self.item['zellennummer']
-    parent.repeating_panel_zellendetails.items = [{'haeftlingsnummer': 'TODO', 'einzug': 'TODO', 'auszug': 'TODO', 'haftdauer': 'TODO'},
-                                                  {'haeftlingsnummer': 'TODO1', 'einzug': 'TODO1', 'auszug': 'TODO1', 'haftdauer': 'TODO1'}]
+    data = anvil.server.call('get_data_inhaft', zellennummer)
+    print(data)
+
+    dic = []
+    for x in data:
+      dic.append({'haeftlingsnummer': x[0], 'einzug': x[1], 'auszug': x[2], 'haftdauer': f'{x[1]}  {x[2]}'})
+
+    parent.repeating_panel_zellendetails.items = dic
